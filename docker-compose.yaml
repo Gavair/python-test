@@ -49,14 +49,30 @@ services:
     ports:
       - 9200:9200
       - 9300:9300
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "curl --silent --fail localhost:9200/_cluster/health || exit 1"
+        ]
+      interval: 5s
+      timeout: 2s
+      retries: 15
+
+  consumer:
+    build: consumer
+    depends_on:
+      broker:
+        condition: service_healthy
+      elasticsearch:
+        condition: service_healthy
 
   producer:
     build: producer
     ports:
       - "5000:5000"
     depends_on:
-      broker:
-        condition: service_healthy
+      - consumer
 
 volumes:
   es_data:
