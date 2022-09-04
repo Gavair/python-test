@@ -24,4 +24,4 @@ def insert_text(text: str):
 
     producer.send("main", {"timestamp": int(datetime.now().timestamp()), "message": text})
 
-    return {"text": text}
+    return "Success"
