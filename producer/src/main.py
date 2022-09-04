@@ -20,8 +20,10 @@ def insert_text(text: str):
     if not re.match("^[a-z0-9]*$", text):
         raise Exception("Input message should contain only lowercase characters and digits")
 
-    logging.info(f'Received "{text}"')
+    logging.info(f'Received: "{text}"')
 
-    producer.send("main", {"timestamp": int(datetime.now().timestamp()), "message": text})
+    message = {"timestamp": int(datetime.now().timestamp()), "message": text}
+    producer.send("main", message)
+    logging.info(f'Send message: "{message}"')
 
     return "Success"

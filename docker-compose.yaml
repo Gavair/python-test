@@ -66,6 +66,8 @@ services:
         condition: service_healthy
       elasticsearch:
         condition: service_healthy
+    environment:
+      TZ: Europe/Kiev
 
   producer:
     build: producer
@@ -73,6 +75,8 @@ services:
       - "5000:5000"
     depends_on:
       - consumer
+    environment:
+      TZ: Europe/Kiev
 
   show_data:
     build: show_data
