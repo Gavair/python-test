@@ -74,5 +74,13 @@ services:
     depends_on:
       - consumer
 
+  show_data:
+    build: show_data
+    ports:
+      - "5001:5001"
+    depends_on:
+      elasticsearch:
+        condition: service_healthy
+
 volumes:
   es_data:
