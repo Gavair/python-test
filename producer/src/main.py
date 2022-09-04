@@ -11,7 +11,7 @@ producer = KafkaProducer(bootstrap_servers=["broker:29092"], value_serializer=la
 
 
 @app.get("/insert/{text}")
-def read_item(text: str):
+def insert_text(text: str):
 
     if not 1 <= len(text) <= 20:
         raise Exception("Input message should be in range [1; 20]")
