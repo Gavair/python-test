@@ -23,10 +23,16 @@ services:
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
       KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
       KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+    healthcheck:
+      test: [ "CMD", "nc", "-vz", "localhost", "9092" ]
+      interval: 5s
+      timeout: 2s
+      retries: 15
 
-  # consumer:
-  #   build: consumer
-  #   ports:
-  #     - "8080:5000"
-  #   depends_on:
-  #     - broker
+  producer:
+    build: producer
+    ports:
+      - "5000:5000"
+    depends_on:
+      broker:
+        condition: service_healthy
