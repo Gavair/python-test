@@ -1,5 +1,6 @@
 import json
 import logging
+import re
 from datetime import datetime
 from fastapi import FastAPI
 from kafka import KafkaProducer
@@ -16,7 +17,7 @@ def insert_text(text: str):
     if not 1 <= len(text) <= 20:
         raise Exception("Input message should be in range [1; 20]")
 
-    if not text.isalnum() or not text.islower():
+    if not re.match("^[a-z0-9]*$", text):
         raise Exception("Input message should contain only lowercase characters and digits")
 
     logging.info(f'Received "{text}"')
